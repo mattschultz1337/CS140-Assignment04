@@ -25,40 +25,99 @@
 		answer </span><span class="pun">=</span><span class="pln"> correctResponse</span><span class="pun">;</span><span class="pln">
 	</span><span class="pun">}</span><span class="pln">
 	
-	</span><span class="com">//setText is no longer needed</span><span class="pln">
+	package assignment04;
+import java.util.Scanner;
+/**
+ * A question with a text and an answer.
+ */
+public class Question {
+	private String text;
+	private String answer;
+	/**
+	 * Constructs the Question with the questions text and
+	 * the correct answer if available
+	 * @param qText the text of the question
+	 * @param correctResponse the correct answer if available
+	 */
+	public Question(String qText, String correctResponse) {
+		text = qText;
+		answer = correctResponse;
+	}
+	
+	//setText is no longer needed
 
-	</span><span class="com">/**
+	/**
 	 * Sets the answer for this question. It may need to changed from
 	 * the one given in the constructor.
 	 * @param correctResponse the answer
-	 */</span><span class="pln">
-	</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> setAnswer</span><span class="pun">(</span><span class="typ">String</span><span class="pln"> correctResponse</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
-		answer </span><span class="pun">=</span><span class="pln"> correctResponse</span><span class="pun">;</span><span class="pln">
-	</span><span class="pun">}</span><span class="pln">
-	</span><span class="com">/**
+	 */
+	public void setAnswer(String correctResponse) {
+		answer = correctResponse;
+	}
+	/**
 	 * Checks a given response for correctness.
 	 * @param response the response to check
 	 * @return true if the response was correct, false otherwise
-	 */</span><span class="pln">
-	</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">boolean</span><span class="pln"> checkAnswer</span><span class="pun">(</span><span class="typ">String</span><span class="pln"> response</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
-		</span><span class="kwd">return</span><span class="pln"> response</span><span class="pun">.</span><span class="pln">equals</span><span class="pun">(</span><span class="pln">answer</span><span class="pun">);</span><span class="pln">
-	</span><span class="pun">}</span><span class="pln">
-	</span><span class="com">/**
+	 */
+	public boolean checkAnswer(String response) {
+		return response.equals(answer);
+	}
+	/**
 	 * Displays this question.
-	 */</span><span class="pln">
-	</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> display</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
-		</span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="pln">text</span><span class="pun">);</span><span class="pln">
-	</span><span class="pun">}</span><span class="pln">
-	</span><span class="com">/**
+	 */
+	public void display() {
+		System.out.println(text);
+	}
+	/**
 	 * Presents a question to the user and checks the response.
-	 */</span><span class="pln">
-	</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> presentQuestion</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
-		display</span><span class="pun">();</span><span class="pln">
-		</span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="kwd">print</span><span class="pun">(</span><span class="str">"Your answer: "</span><span class="pun">);</span><span class="pln">
-		</span><span class="typ">Scanner</span><span class="pln"> </span><span class="kwd">in</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Scanner</span><span class="pun">(</span><span class="typ">System</span><span class="pun">.</span><span class="kwd">in</span><span class="pun">);</span><span class="pln">
-		</span><span class="typ">String</span><span class="pln"> response </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">in</span><span class="pun">.</span><span class="pln">nextLine</span><span class="pun">();</span><span class="pln">
-		</span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="pln">checkAnswer</span><span class="pun">(</span><span class="pln">response</span><span class="pun">));</span><span class="pln">
-	</span><span class="pun">}</span><span class="pln">
+	 */
+	public void presentQuestion() {
+		display();
+		System.out.print("Your answer: ");
+		Scanner in = new Scanner(System.in);
+		String response = in.nextLine();
+		System.out.println(checkAnswer(response));
+	}
+
+}
+package assignment04;
+import java.util.ArrayList;
+/**
+ * A question with multiple choices.
+ */
+public class ChoiceQuestion extends Question {
+	private ArrayList<String> choices;
+	/**
+	 * Constructs a ChoiceQuestion with the text of the question
+	 * but no correct answer.
+	 * @param qText the text of the question
+	 */
+	public ChoiceQuestion(String qText) {
+		super(qText, "");
+		choices = new ArrayList<>();
+	}
+	/**
+	 * Adds an answer choice to this question.
+	 * @param choice the choice to add
+	 * @param correct true if this is the correct choice, false otherwise
+	 */
+	public void addChoice(String choice, boolean correct) {
+		choices.add(choice);
+		if (correct) {
+			// Convert choices.size() to string
+			String choiceString = "" + choices.size();
+			setAnswer(choiceString);
+		}
+	}
+	public void display() {
+		// Display the question text
+		super.display();
+		// Display the answer choices
+		for (int i = 0; i < choices.size(); i++) {
+			System.out.println((i+1) + ": " + choices.get(i));     
+		}
+	}
+}
 
 </span><span class="pun">}</span><span class="pln">
 </span><span class="kwd">package</span><span class="pln"> assignment04</span><span class="pun">;</span><span class="pln">
